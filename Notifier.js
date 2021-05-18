@@ -8,14 +8,9 @@ var robotTopic = 'Care system robots';
 
 var client = mqtt.connect('mqtt://localhost:1883');
 
-client.on('connect', () =>
-{
-    console.log("Device notifier started!");
-});
-
 module.exports = {
-    notifyWatches: function (roomNumber, message, done) {
-        client.publish(watchTopic, roomNumber + " " + done + " " + message);
+    notifyWatches: function (alertID,roomNumber, message, done) {
+        client.publish(watchTopic, alertID + " " + roomNumber + " " + done + " " + message);
     },
     notifyRobot: function (roomNumber, message) {
         client.publish(robotTopic, roomNumber + " " + message);

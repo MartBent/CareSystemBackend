@@ -18,24 +18,26 @@ router.get('/call', (req, res) =>{
 
     var roomNum = req.query.roomNumber;
     var message = req.query.message;
-    var patientID;
+    var patientID = 0;
 
-    conn.query("SELECT * FROM Patient where patient_room_no = " + roomNum, function (err, result) {
-        //console.log(result[0].patient_id);
-        //patientID = result[0].RowDataPacket.patient_id;
+    let getsql = "SELECT * FROM Patient where patient_room_no = " + roomNum;
+
+    conn.query(getsql, function (err, result) 
+    {
+        patientID = result[0].patient_id;
+        let sql  = `INSERT INTO Alert (patient_id, alert_message) VALUES (${patientID} ,\'${message}\')`;
+
+        conn.query(sql, function (err, result) 
+        {
+            if (err){console.log(err); return;}
+
+            console.log();
+            notifier.notifyWatches(roomNum, message, 0);
+            res.send("OK");
+        });
     });
-  
-
-   // let sql  = `INSERT INTO Alert (patient_id, alert_message, helped) VALUES ( ${patient_id} , ${message}, 0)`;
-
-    // conn.query(sql, function (err, result) {
-    //   if (err) throw err;
-    //   res.send(result);
-    // });
-    console.log("Help called on room: " + roomNum);
-    notifier.notifyWatches(roomNum, message, 0);
-    res.send("OK");
-
 });
+
+
 
 module.exports = router;
