@@ -14,5 +14,7 @@ app.use("/commands", commandsRoute)
 const alertsRoute = require("./Routes/Alerts");
 app.use("/alerts", alertsRoute)
 
+const medicineTimeRoute = require("./Routes/MedicineTime");
+app.use("/medicinetimes", medicineTimeRoute)
 
 app.listen(3000);
