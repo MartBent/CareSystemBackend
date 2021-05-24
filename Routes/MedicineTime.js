@@ -6,7 +6,7 @@ var notifier = require('../Notifier');
 
 
 router.get('/:patientID', (req, res) =>{
-    conn.query("SELECT * FROM MedicineTime WHERE patient_id =" + req.params.patientID, function (err, result) {
+    conn.query(`SELECT * FROM MedicineTime WHERE patient_id = ${req.params.patientID} ORDER BY medicinetime_time ASC`, function (err, result) {
         res.send(result);
     });
 });
@@ -17,7 +17,7 @@ router.post('/:patientID', (req, res) =>{
         res.send("NO TIME PROVIDED");
         return;
     }
-    conn.query(`SELECT * FROM MedicineTime where medicinetime_time = "${req.query.time}"`,  function (err, result) {
+    conn.query(`SELECT * FROM MedicineTime where medicinetime_time = "${req.query.time}" AND patient_id = ${req.params.patientID}`,  function (err, result) {
         if(result && result.length < 1)
         {
             let sql  = `INSERT INTO MedicineTime (patient_id, medicinetime_time) VALUES(${req.params.patientID}, "${req.query.time}")`;
