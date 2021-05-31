@@ -4,14 +4,13 @@ var db = require('../SqlHelper');
 var conn = db.getConnection();
 
 router.get('/', (req, res) =>{
-      conn.query("SELECT * FROM Measurement", function (err, result) {
+      conn.query("SELECT * FROM Measurement order by measurement_date desc", function (err, result) {
       res.send(result);
     });
  });
 
 router.get('/:patientID', (req, res) =>{
-
-  let sql  = "SELECT * FROM Measurement WHERE patient_id ="+req.params.patientID;
+  let sql  = "SELECT * FROM Measurement WHERE patient_id ="+req.params.patientID + " order by measurement_date desc";
   conn.query(sql, function (err, result) {
     res.send(result);
   });
