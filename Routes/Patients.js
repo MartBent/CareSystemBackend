@@ -29,7 +29,7 @@ conn.query(sql, function (err, result) {
     });
 });
 
-router.delete('/:nurseID', (req, res) =>{
+router.delete('/:patientID', (req, res) =>{
 let sql  = `DELETE FROM Patient where patient_id = ${req.params.patientID}`;
 conn.query(sql, function (err, result) {
         if(!err)

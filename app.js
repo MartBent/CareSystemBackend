@@ -14,7 +14,10 @@ app.use("/commands", commandsRoute)
 const alertsRoute = require("./Routes/Alerts");
 app.use("/alerts", alertsRoute)
 
-const medicineTimeRoute = require("./Routes/MedicineTime");
+const medicineTimeRoute = require("./Routes/MedicineTimes");
 app.use("/medicinetimes", medicineTimeRoute)
+
+const measurementsRoute = require("./Routes/Measurements.js");
+app.use("/measurements",measurementsRoute);
 
 app.listen(3000);

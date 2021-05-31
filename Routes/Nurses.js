@@ -22,6 +22,7 @@ let sql  = `INSERT INTO Nurse (nurse_firstname, nurse_lastname, nurse_function) 
 conn.query(sql, function (err, result) {
         if(!err)
         {
+          console.log("Adding nurse: " + sql);
           res.send("OK");
         }
         else
@@ -36,6 +37,7 @@ router.delete('/:nurseID', (req, res) =>{
   conn.query(sql, function (err, result) {
          if(!err)
          {
+             console.log("Deleting nurse: " + sql);
              res.send("OK");
          }
          else
