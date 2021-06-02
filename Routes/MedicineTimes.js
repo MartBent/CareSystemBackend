@@ -1,3 +1,9 @@
+/*
+    Author: Mart Bent
+    Date: 2-6-2021
+    Ver: 1.0
+*/
+
 var express = require('express');
 const router = express.Router();
 var db = require('../SqlHelper');
@@ -24,6 +30,7 @@ router.post('/:patientID', (req, res) =>{
             conn.query(sql, function (err, result) {
                 if(!err)
                 {
+                    notifier.notifyTimes(req.params.patientID);
                     res.send("OK");
                 }
                 else

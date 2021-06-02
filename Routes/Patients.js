@@ -1,3 +1,9 @@
+/*
+    Author: Mart Bent
+    Date: 2-6-2021
+    Ver: 1.0
+*/
+
 var express = require('express');
 const router = express.Router();
 var db = require('../SqlHelper');
@@ -20,6 +26,7 @@ let sql  = `INSERT INTO Patient (patient_firstname, patient_lastname, patient_ro
 conn.query(sql, function (err, result) {
         if(!err)
         {
+            console.log("Adding patient: " + sql);
             res.send("OK");
         }
         else
@@ -54,6 +61,7 @@ let sql  = `DELETE FROM Patient where patient_id = ${req.params.patientID}`;
 conn.query(sql, function (err, result) {
         if(!err)
         {
+            console.log("Deleting patient: " + sql);
             res.send("OK");
         }
         else

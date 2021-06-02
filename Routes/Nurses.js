@@ -1,3 +1,9 @@
+/*
+    Author: Mart Bent
+    Date: 2-6-2021
+    Ver: 1.0
+*/
+
 var express = require('express');
 const router = express.Router();
 var db = require('../SqlHelper');
