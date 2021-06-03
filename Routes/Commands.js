@@ -46,6 +46,7 @@ router.get('/medicine', (req, res) =>{
     conn.query('SELECT room_no FROM AmazonIdRoomNumber where amazon_id="'+req.query.amazonID+'"', function (err, result) 
     {
         var roomNum = 0;
+        var pills = 0;
         if(result.length < 1)
         {
             res.send("No room found with this device");
@@ -53,10 +54,23 @@ router.get('/medicine', (req, res) =>{
         else
         {
             roomNum = result[0].room_no;
-            res.send("OK");
+            conn.query('UPDATE Patient SET pillsRemaining = pillsRemaining - 1 where patient_room_no = '+roomNum+" AND pillsRemaining > 0", null)
+            conn.query('SELECT * FROM Patient where patient_room_no = '+roomNum, function (err, result2) 
+            {
+                if(result2 && result2.length > 0)
+                {
+                    pills = result2[0].pillsRemaining;
+                    res.send("OK");
+                    console.log("Deploying medicine in room: " + roomNum + " " + pills);
+                    notifier.notifyRobot(roomNum, pills + " MEDICINE");
+                }
+                else
+                {
+                    res.send("ERROR PATIENT NOT FOUND");
+                }
+                
+            });
         }
-        console.log("Deploying medicine in room: " + roomNum);
-        notifier.notifyRobot(roomNum,"MEDICINE");
     });
 });
 
