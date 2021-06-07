@@ -57,18 +57,21 @@ router.get('/call', (req, res) =>{
     });
 });
 
-router.put('/:alertID/mark', (req, res) =>{
+router.get('/:alertID/mark', (req, res) =>{
+    console.log(req);
     let sql  = "UPDATE Alert SET helped = 1 WHERE alert_id = " + req.params.alertID;
     conn.query(sql, function (err, result) {
         if (err) throw err;
         if(result.changedRows == 0)
         {
+            console.log("Already being helped");
             res.send("The patient is already being helped!");
         }
         else
         {
+            console.log("Helping alert: "+ req.params.alertID);
             res.send("You have been assigned to this patient.");
-            notifier.notifyWatches(req.params.alertID, 0, "None", 1);
+            //notifier.notifyWatches(req.params.alertID, 0, "None", 1);
         }
     });
 });
