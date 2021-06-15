@@ -37,12 +37,12 @@ conn.query(sql, function (err, result) {
 });
 
 router.put('/:patientID', (req, res) =>{
-    if(!req.query.patientFirstname || !req.query.patientLastname || !req.query.roomNumber || !req.params.patientID)
+    if(!req.query.patientFirstname || !req.query.patientLastname || !req.query.roomNumber || !req.params.patientID || !req.query.pills)
     {
-        res.send("Not all fiels are filled: patientFirstname, patientLastname, roomNumber");
+        res.send("Not all fiels are filled: patientFirstname, patientLastname, roomNumber, pills");
         return;
     }
-    let sql  = `UPDATE Patient SET patient_firstname = "${req.query.patientFirstname}", patient_lastname = "${req.query.patientLastname}", patient_room_no = "${req.query.roomNumber}" WHERE patient_id = "${req.params.patientID}"`;
+    let sql  = `UPDATE Patient SET patient_firstname = "${req.query.patientFirstname}", patient_lastname = "${req.query.patientLastname}",  patient_room_no = "${req.query.roomNumber}", pillsRemaining = "${req.query.pills}" WHERE patient_id = "${req.params.patientID}"`;
     conn.query(sql, function (err, result) {
         if(!err)
         {

@@ -54,7 +54,9 @@ router.get('/medicine', (req, res) =>{
         else
         {
             roomNum = result[0].room_no;
-            conn.query('UPDATE Patient SET pillsRemaining = pillsRemaining - 1 where patient_room_no = '+roomNum+" AND pillsRemaining > 0", null)
+            //conn.query('UPDATE Patient SET pillsRemaining = pillsRemaining - 1 where patient_room_no = '+roomNum+" AND pillsRemaining > 0", null)
+            //Handled in the robot
+            
             conn.query('SELECT * FROM Patient where patient_room_no = '+roomNum, function (err, result2) 
             {
                 if(result2 && result2.length > 0)

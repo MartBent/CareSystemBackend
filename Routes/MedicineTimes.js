@@ -51,7 +51,8 @@ let sql  = `DELETE FROM MedicineTime where medicinetime_id = ${req.params.medici
 conn.query(sql, function (err, result) {
         if(!err)
         {
-            res.send("OK");
+            notifier.notifyTimes(req.params.patientID);
+            res.send("OK");   
         }
         else
         {
